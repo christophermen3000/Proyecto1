@@ -2,7 +2,7 @@ package pe.com.nttdata.notificacion.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pe.com.nttdata.notificacion.controller.NotificacionRequest;
+import pe.com.nttdata.clientefeign.notificacion.NotificacionRequest;
 import pe.com.nttdata.notificacion.dao.INotificacionDao;
 import pe.com.nttdata.notificacion.model.Notificacion;
 import pe.com.nttdata.notificacion.service.INotificacionService;

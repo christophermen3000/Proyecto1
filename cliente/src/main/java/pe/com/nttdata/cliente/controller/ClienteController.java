@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import pe.com.nttdata.cliente.model.Cliente;
 import pe.com.nttdata.cliente.service.IClienteService;
 
-import java.util.Date;
+import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -35,17 +36,17 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registrarCliente(@RequestBody ClienteRequest clienteRequest) {
-        log.info("nuevo registro de cliente {}", clienteRequest);
-        Cliente cliente = clienteService.registrarCliente(clienteRequest);
-        return new ResponseEntity<ClienteRequest>(new ClienteRequest(cliente.getId(), clienteRequest.nombre(), clienteRequest.apellidoPaterno(), clienteRequest.apellidoMaterno() , clienteRequest.email(), clienteRequest.fechaNacimiento()), HttpStatus.OK);
+    public ResponseEntity<?> registrarCliente(@Valid @RequestBody Cliente cliente) {
+        log.info("nuevo registro de cliente {}", cliente);
+        Cliente newCliente = clienteService.registrarCliente(cliente);
+        return new ResponseEntity<ClienteRequest>(new ClienteRequest(newCliente.getId(), cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno() , cliente.getEmail(), cliente.getFechaNacimiento()), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<?> modificarCliente(@RequestBody ClienteRequest clienteRequest) {
-        log.info("modificar datos de cliente {}", clienteRequest);
-        clienteService.modificarCliente(clienteRequest);
-        return new ResponseEntity<ClienteRequest>(clienteRequest, HttpStatus.OK);
+    public ResponseEntity<?> modificarCliente(@Valid @RequestBody Cliente cliente) {
+        log.info("modificar datos de cliente {}", cliente);
+        clienteService.modificarCliente(cliente);
+        return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -76,7 +77,7 @@ public class ClienteController {
     }
 
     @GetMapping(params="fechaNacimiento")
-    public ResponseEntity<?> listarClientesPorFechaNacimiento(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaNacimiento) {
+    public ResponseEntity<?> listarClientesPorFechaNacimiento(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaNacimiento) {
         List<Cliente> clientes = clienteService.listarClientesPorFechaNacimiento(fechaNacimiento);
         log.info("listar clientes por fecha de nacimiento: ", fechaNacimiento);
         return new ResponseEntity<>(clientes, clientes.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);

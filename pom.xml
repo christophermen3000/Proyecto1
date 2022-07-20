@@ -9,6 +9,7 @@
         <module>eureka-server</module>
         <module>apigateway</module>
         <module>notificacion</module>
+        <module>clientefeign</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -43,11 +44,14 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 	</dependencies>
 

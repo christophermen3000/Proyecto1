@@ -11,7 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -31,23 +31,21 @@ public class Cliente {
     @Column(name = "cliente_id")
     private Integer id;
     @Column(name = "cliente_nombre")
-    @NotEmpty
-    @Pattern(regexp="[a-zA-Z]{2,20}")
+    @NotEmpty (message = "{NotEmpty.cliente.nombre}")
+    @Pattern(regexp="[a-zA-Z]{2,20}", message = "{Pattern.cliente.nombre}")
     private String nombre;
     @Column(name = "cliente_apellidoPaterno")
-    @NotEmpty
-    @Pattern(regexp="[a-zA-Z]{2,20}")
+    @NotEmpty (message = "{NotEmpty.cliente.apellidoPaterno}")
+    @Pattern(regexp="[a-zA-Z]{2,20}", message = "{Pattern.cliente.apellidoPaterno}")
     private String apellidoPaterno;
     @Column(name = "cliente_apellidoMaterno")
-    @NotEmpty
-    @Pattern(regexp="[a-zA-Z]{2,20}")
+    @NotEmpty (message = "{NotEmpty.cliente.apellidoMaterno}")
+    @Pattern(regexp="[a-zA-Z]{2,20}", message = "{Pattern.cliente.apellidoMaterno}")
     private String apellidoMaterno;
     @Column(name = "cliente_email")
-    @NotEmpty
-    @Email
+    @NotEmpty (message = "{NotEmpty.cliente.email}")
+    @Email (message = "{Email.cliente.email}")
     private String email;
     @Column(name = "cliente_fechaNacimiento")
-    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
 }

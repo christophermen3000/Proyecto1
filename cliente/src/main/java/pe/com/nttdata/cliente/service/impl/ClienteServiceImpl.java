@@ -2,45 +2,47 @@ package pe.com.nttdata.cliente.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import pe.com.nttdata.cliente.controller.ClienteCheckResponse;
-import pe.com.nttdata.cliente.controller.ClienteRequest;
-import pe.com.nttdata.cliente.controller.NotificacionRequest;
 import pe.com.nttdata.cliente.dao.IClienteDao;
 import pe.com.nttdata.cliente.model.Cliente;
 import pe.com.nttdata.cliente.rabbitmq.RabbitMQMessageProducer;
 import pe.com.nttdata.cliente.service.IClienteService;
+import pe.com.nttdata.clientefeign.notificacion.NotificacionRequest;
+import pe.com.nttdata.clientefeign.validar.cliente.ClienteCheckClient;
+import pe.com.nttdata.clientefeign.validar.cliente.ClienteCheckResponse;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class ClienteServiceImpl implements IClienteService {
     private final IClienteDao clienteDao;
-    private final RestTemplate restTemplate;
+    //private final RestTemplate restTemplate;
+    private final ClienteCheckClient clienteCheckClient;
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public List<Cliente> listarClientes() {
         return clienteDao.findAll();
     }
 
-    public Cliente registrarCliente(ClienteRequest clienteRequest) {
-        Cliente cliente = Cliente.builder()
+    public Cliente registrarCliente(Cliente cliente) {
+        /*Cliente cliente = Cliente.builder()
                 .nombre(clienteRequest.nombre())
                 .apellidoPaterno(clienteRequest.apellidoPaterno())
                 .apellidoMaterno(clienteRequest.apellidoMaterno())
                 .email(clienteRequest.email())
                 .fechaNacimiento(clienteRequest.fechaNacimiento())
-                .build();
+                .build();*/
         Cliente clienteResponse = clienteDao.save(cliente);
 
-        ClienteCheckResponse clienteCheckResponse = restTemplate.getForObject(
+        /*ClienteCheckResponse clienteCheckResponse = restTemplate.getForObject(
                 //"http://localhost:8081/api/v1/cliente-check/{clienteId}",
                 "http://VALIDARCLIENTE/api/v1/cliente-check/{clienteId}",
                 ClienteCheckResponse.class,
                 clienteResponse.getId()
-        );
+        );*/
+
+        ClienteCheckResponse clienteCheckResponse = clienteCheckClient.validarCliente(clienteResponse.getId());
 
         if (clienteCheckResponse.esEstafador()) {
             throw new IllegalStateException("Cliente es un estafador!!");
@@ -62,15 +64,15 @@ public class ClienteServiceImpl implements IClienteService {
         return clienteResponse;
     }
 
-    public Cliente modificarCliente(ClienteRequest clienteRequest) {
-        Cliente cliente = Cliente.builder()
+    public Cliente modificarCliente(Cliente cliente) {
+        /*Cliente cliente = Cliente.builder()
                 .id(clienteRequest.id())
                 .nombre(clienteRequest.nombre())
                 .apellidoPaterno(clienteRequest.apellidoPaterno())
                 .apellidoMaterno(clienteRequest.apellidoMaterno())
                 .email(clienteRequest.email())
                 .fechaNacimiento(clienteRequest.fechaNacimiento())
-                .build();
+                .build();*/
         return clienteDao.save(cliente);
     }
 
@@ -95,7 +97,7 @@ public class ClienteServiceImpl implements IClienteService {
         return clienteDao.findByApellidoMaterno(apellidoMaterno);
     }
 
-    public List<Cliente> listarClientesPorFechaNacimiento(Date fechaNacimiento) {
+    public List<Cliente> listarClientesPorFechaNacimiento(LocalDate fechaNacimiento) {
         return clienteDao.findByFechaNacimiento(fechaNacimiento);
     }
 }
