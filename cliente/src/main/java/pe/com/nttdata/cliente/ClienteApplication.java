@@ -4,7 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication
+@SpringBootApplication(
+        scanBasePackages = {
+                "pe.com.nttdata.cliente",
+                "pe.com.nttdata.clientequeues"
+        }
+)
 @EnableFeignClients(
         basePackages = "pe.com.nttdata.clientefeign"
 )

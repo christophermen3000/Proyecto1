@@ -1,4 +1,4 @@
-package pe.com.nttdata.cliente.config;
+package pe.com.nttdata.clientequeues.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;

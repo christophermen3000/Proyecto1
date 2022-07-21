@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
@@ -48,4 +49,8 @@ public class Cliente {
     private String email;
     @Column(name = "cliente_fechaNacimiento")
     private LocalDate fechaNacimiento;
+    @ManyToOne
+    @JoinColumn(name="pais_id", nullable = false)
+    @NotNull(message = "{NotNull.cliente.pais}")
+    private Pais pais;
 }

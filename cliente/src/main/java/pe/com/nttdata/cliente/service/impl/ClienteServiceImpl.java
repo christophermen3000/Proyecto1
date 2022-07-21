@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.com.nttdata.cliente.dao.IClienteDao;
 import pe.com.nttdata.cliente.model.Cliente;
-import pe.com.nttdata.cliente.rabbitmq.RabbitMQMessageProducer;
 import pe.com.nttdata.cliente.service.IClienteService;
 import pe.com.nttdata.clientefeign.notificacion.NotificacionRequest;
 import pe.com.nttdata.clientefeign.validar.cliente.ClienteCheckClient;
 import pe.com.nttdata.clientefeign.validar.cliente.ClienteCheckResponse;
+import pe.com.nttdata.clientequeues.rabbitmq.RabbitMQMessageProducer;
 
 import java.time.LocalDate;
 import java.util.List;
