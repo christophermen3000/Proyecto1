@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: validarcliente
+  labels:
+    app: validarcliente
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: validarcliente
+      labels:
+        app: validarcliente
+    spec:
+      containers:
+        - name: validarcliente
+          image: christophermen/validarcliente:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: validarcliente

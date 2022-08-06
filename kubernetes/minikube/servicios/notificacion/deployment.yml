@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notificacion
+  labels:
+    app: notificacion
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: notificacion
+      labels:
+        app: notificacion
+    spec:
+      containers:
+        - name: notificacion
+          image: christophermen/notificacion:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: notificacion
