@@ -40,6 +40,7 @@ public class ClienteController {
         log.info("nuevo registro de cliente {}", cliente);
         Cliente newCliente = clienteService.registrarCliente(cliente);
         String resultado = clienteService.validarCliente(newCliente);
+        log.info("Resultado: {}", resultado);
         if (resultado.equals("OK")){
             clienteService.registrarNotificacion(newCliente);
             return new ResponseEntity<ClienteRequest>(new ClienteRequest(newCliente.getId(), cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno() , cliente.getEmail(), cliente.getFechaNacimiento()), HttpStatus.OK);
