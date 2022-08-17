@@ -1,0 +1,35 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    password: 1234
+    url: jdbc:postgresql://postgres:5432/notificacion
+    username: nttdata
+  jpa:
+    database : POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  zipkin:
+    base-url: http://zipkin:9411
+  rabbitmq:
+    addresses: rabbitmq:5672
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: false
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notificacion.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key

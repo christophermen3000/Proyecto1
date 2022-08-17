@@ -1,0 +1,27 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    password: 1234
+    url: jdbc:postgresql://localhost:5431/clientecheck
+    username: nttdata
+  jpa:
+    database : POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  zipkin:
+    base-url: http://localhost:9411
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: false

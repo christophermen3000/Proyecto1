@@ -1,0 +1,33 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    password: 1234
+    url: jdbc:postgresql://postgres:5432/cliente
+    username: nttdata
+  jpa:
+    database : POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:bd/tablas.sql
+      data-locations: classpath:bd/data.sql
+  zipkin:
+    base-url: http://zipkin:9411
+  rabbitmq:
+    addresses: rabbitmq:5672
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: false

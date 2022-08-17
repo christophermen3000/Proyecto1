@@ -79,7 +79,7 @@ services:
       - zipkin
       - postgres
       - rabbitmq
-      - eureka-server
+#      - eureka-server
   validarcliente:
     image: christophermen/validarcliente:latest
     container_name: validarcliente
@@ -93,7 +93,7 @@ services:
     depends_on:
       - zipkin
       - postgres
-      - eureka-server
+#      - eureka-server
   notificacion:
     image: christophermen/notificacion:latest
     container_name: notificacion
@@ -108,7 +108,7 @@ services:
       - zipkin
       - postgres
       - rabbitmq
-      - eureka-server
+#      - eureka-server
 
 networks:
   postgres:
