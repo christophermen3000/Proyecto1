@@ -31,3 +31,25 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     enabled: false
+
+resilience4j:
+  circuitbreaker:
+    circuit-breaker-aspect-order: 1
+    instances:
+      validarclienteCB:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+  retry:
+    retry-aspect-order: 2
+    instances:
+      validarclienteRetry:
+        registerHealthIndicator: true
+        maxRetryAttempts: 5
+        waitDuration: 5s

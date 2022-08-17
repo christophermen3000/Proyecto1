@@ -79,6 +79,7 @@ services:
       - zipkin
       - postgres
       - rabbitmq
+      - config-server
 #      - eureka-server
   validarcliente:
     image: christophermen/validarcliente:latest
@@ -93,6 +94,7 @@ services:
     depends_on:
       - zipkin
       - postgres
+      - config-server
 #      - eureka-server
   notificacion:
     image: christophermen/notificacion:latest
@@ -108,7 +110,17 @@ services:
       - zipkin
       - postgres
       - rabbitmq
+      - config-server
 #      - eureka-server
+  config-server:
+    image: christophermen/config-server:latest
+    container_name: config-server
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
 
 networks:
   postgres:
