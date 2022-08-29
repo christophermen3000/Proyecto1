@@ -42,29 +42,29 @@ services:
       - "15672:15672"
     networks:
       - spring
-#  eureka-server:
-#    image: christophermen/eureka-server:latest
-#    container_name: eureka-server
-#    ports:
-#      - "8761:8761"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
-#  apigateway:
-#    image: christophermen/apigateway:latest
-#    container_name: apigateway
-#    ports:
-#      - "8083:8083"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
-#      - eureka-server
+  eureka-server:
+    image: christophermen/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+  apigateway:
+    image: christophermen/apigateway:latest
+    container_name: apigateway
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
   cliente:
     image: christophermen/cliente:latest
     container_name: cliente
@@ -80,7 +80,8 @@ services:
       - postgres
       - rabbitmq
       - config-server
-#      - eureka-server
+      - eureka-server
+      - apigateway
   validarcliente:
     image: christophermen/validarcliente:latest
     container_name: validarcliente
@@ -95,7 +96,8 @@ services:
       - zipkin
       - postgres
       - config-server
-#      - eureka-server
+      - eureka-server
+      - apigateway
   notificacion:
     image: christophermen/notificacion:latest
     container_name: notificacion
@@ -111,7 +113,23 @@ services:
       - postgres
       - rabbitmq
       - config-server
-#      - eureka-server
+      - eureka-server
+  autenticacion:
+    image: christophermen/autenticacion:latest
+    container_name: autenticacion
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - postgres
+      - config-server
+      - eureka-server
+      - apigateway
   config-server:
     image: christophermen/config-server:latest
     container_name: config-server

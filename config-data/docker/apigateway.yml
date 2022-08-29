@@ -1,0 +1,33 @@
+server:
+  port: 8083
+
+spring:
+  zipkin:
+    base-url: http://zipkin:9411
+  cloud:
+    gateway:
+      routes:
+        - id: cliente
+          uri: lb://cliente
+          predicates:
+            - Path=/api/v1/cliente/**
+          filters:
+            - AutorizacionFilter
+        - id: validarcliente
+          uri: lb://validarcliente
+          predicates:
+            - Path=/api/v1/cliente-check/**
+          filters:
+            - AutorizacionFilter
+        - id: autenticacion
+          uri: lb://autenticacion
+          predicates:
+            - Path=/api/v1/autenticacion/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+#    enabled: false
