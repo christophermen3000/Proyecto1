@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-server
+  labels:
+    app: eureka-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: eureka-server
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+        - name: autenticacion
+          image: christophermen/eureka-server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8761
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: eureka-server
