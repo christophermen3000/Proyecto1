@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: notificacionkafka
+  config:
+    import: "optional:configserver:http://config-server:8090"
+  cloud:
+    config:
+      enabled: true
+      uri: http://config-server:8090

@@ -13,7 +13,8 @@
         <module>clientequeues</module>
         <module>config-server</module>
 		<module>autenticacion</module>
-	</modules>
+        <module>notificacionkafka</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
