@@ -43,6 +43,7 @@ public class ClienteController {
         log.info("Resultado: {}", resultado);
         if (resultado.equals("OK")){
             clienteService.registrarNotificacion(newCliente);
+            clienteService.registrarNotificacionKafka(newCliente);
             return new ResponseEntity<ClienteRequest>(new ClienteRequest(newCliente.getId(), cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno() , cliente.getEmail(), cliente.getFechaNacimiento()), HttpStatus.OK);
         }
         return new ResponseEntity("Servicio validarCliente no disponible", HttpStatus.OK);
