@@ -1,5 +1,7 @@
 package pe.com.nttdata.autenticacion.service;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import pe.com.nttdata.autenticacion.security.JwtProvider;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
+@NoArgsConstructor
 public class UsuarioService {
     @Autowired
     IUsuarioDao usuarioDao;
